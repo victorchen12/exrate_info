@@ -1,0 +1,1 @@
+"""Exchange-rate monitor package."""
