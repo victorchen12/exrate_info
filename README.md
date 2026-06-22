@@ -1,6 +1,6 @@
 # 汇率监控与飞书推送
 
-Python 3.11 项目，用 GitHub Actions 定时从 Frankfurter 公共接口获取 `CNY -> KRW` 汇率并推送到飞书自定义机器人。汇率接口不需要 API key。
+Python 3.11 项目，用 GitHub Actions 定时从 Frankfurter 公共接口获取 `CNY -> KRW` 汇率并推送到飞书自定义机器人。推送口径为“100 当地币需要多少人民币”，例如默认显示 `100 KRW = x CNY`。汇率接口不需要 API key。
 
 ## GitHub Secrets
 
