@@ -5,7 +5,7 @@ from exrate_monitor.message import build_feishu_text
 from exrate_monitor.rates import RateResult
 
 
-def test_build_feishu_text_includes_rate_beijing_time_and_source():
+def test_build_feishu_text_includes_quote_to_cny_rate_beijing_time_and_source():
     fetched_at = datetime(2026, 6, 22, 1, 15, tzinfo=ZoneInfo("UTC"))
     rate = RateResult(
         base="CNY",
@@ -17,6 +17,6 @@ def test_build_feishu_text_includes_rate_beijing_time_and_source():
 
     text = build_feishu_text(rate)
 
-    assert "1 CNY = 189.123456 KRW" in text
+    assert "100 KRW = 0.528755 CNY" in text
     assert "北京时间: 2026-06-22 09:15" in text
     assert "数据源: Frankfurter" in text
