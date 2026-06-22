@@ -1,0 +1,30 @@
+name: Exchange Rate Monitor
+
+"on":
+  schedule:
+    - cron: "15 1,5,10 * * *"
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: python -m pip install .
+
+      - name: Send exchange-rate notification
+        env:
+          FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
+          FEISHU_WEBHOOK_SECRET: ${{ secrets.FEISHU_WEBHOOK_SECRET }}
+          EXRATE_BASE: ${{ vars.EXRATE_BASE || 'CNY' }}
+          EXRATE_QUOTE: ${{ vars.EXRATE_QUOTE || 'KRW' }}
+          EXRATE_AMOUNT: ${{ vars.EXRATE_AMOUNT || '1' }}
+        run: python -m exrate_monitor.main
