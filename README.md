@@ -1,54 +1,13 @@
-# 汇率监控与飞书推送
+﻿# 汇率监控项目（已终止）
 
-Python 3.11 项目，用 GitHub Actions 定时从 Frankfurter 公共接口获取 `CNY -> KRW` 汇率并推送到飞书自定义机器人。推送口径为“100 当地币需要多少人民币”，例如默认显示 `100 KRW = x CNY`。汇率接口不需要 API key。
+本项目已于 2026-09-04 终止。GitHub Actions 自动任务已停用，不再通过 GitHub 定时获取汇率数据，也不再向飞书发送通知。
 
-## GitHub Secrets
+## 当前状态
 
-在仓库 `Settings -> Secrets and variables -> Actions -> Secrets` 中配置：
+- 原工作流 `.github/workflows/exrate-monitor.yml` 已停用并保留为 `.github/workflows/exrate-monitor.yml.disabled`。
+- `exrate_monitor/` 下的业务代码和 `tests/` 仅作为历史留存，不再安排运行或维护。
+- 不要在 GitHub Actions 中重新启用或手动运行该任务。
 
-- `FEISHU_WEBHOOK_URL`: 飞书自定义机器人的 webhook URL
-- `FEISHU_WEBHOOK_SECRET`: 飞书机器人签名密钥
+## 历史说明
 
-可选变量可放在 Actions Variables 中：
-
-- `EXRATE_BASE`: 默认 `CNY`
-- `EXRATE_QUOTE`: 默认 `KRW`
-- `EXRATE_AMOUNT`: 默认 `1`
-
-## 定时执行
-
-工作流文件为 `.github/workflows/exrate-monitor.yml`。
-
-默认 cron 是：
-
-```cron
-15 1,5,10 * * *
-```
-
-GitHub Actions 使用 UTC 时间，对应北京时间每日 `09:15 / 13:15 / 18:15`。
-
-## 手动运行
-
-在 GitHub 仓库的 `Actions -> Exchange Rate Monitor -> Run workflow` 手动触发。
-
-本地也可以运行：
-
-```bash
-python -m pip install .
-python -m exrate_monitor.main
-```
-
-本地运行前需要先设置上述环境变量。
-
-## API 注意事项
-
-当前使用 Frankfurter 公共 API，不需要申请 key。默认每天 3 次，约每月 90 到 93 次请求；如果未来接口限制发生变化，可以减少 cron 频率或切换数据源。
-
-## 测试
-
-开发依赖安装后运行：
-
-```bash
-python -m pip install ".[dev]"
-python -m pytest
-```
+项目原本使用 Frankfurter 公共 API 获取 `CNY -> KRW` 汇率，并通过飞书自定义机器人发送通知。相关环境变量、运行方式和测试依赖仅保留在历史代码中，当前不再使用。

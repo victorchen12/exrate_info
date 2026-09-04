@@ -1,18 +1,16 @@
 from pathlib import Path
 
-import yaml
+
+ACTIVE_WORKFLOW = Path(".github/workflows/exrate-monitor.yml")
+DISABLED_WORKFLOW = Path(".github/workflows/exrate-monitor.yml.disabled")
 
 
-def test_workflow_has_schedule_and_manual_dispatch():
-    workflow = yaml.safe_load(Path(".github/workflows/exrate-monitor.yml").read_text())
-
-    assert workflow["on"]["schedule"] == [{"cron": "15 1,5,10 * * *"}]
-    assert "workflow_dispatch" in workflow["on"]
+def test_exchange_rate_workflow_is_disabled():
+    assert not ACTIVE_WORKFLOW.exists()
+    assert DISABLED_WORKFLOW.exists()
 
 
-def test_workflow_runs_monitor_module():
-    workflow_text = Path(".github/workflows/exrate-monitor.yml").read_text()
+def test_disabled_workflow_is_preserved_for_reference():
+    workflow_text = DISABLED_WORKFLOW.read_text()
 
     assert "python -m exrate_monitor.main" in workflow_text
-    assert "FEISHU_WEBHOOK_URL" in workflow_text
-    assert "FEISHU_WEBHOOK_SECRET" in workflow_text
